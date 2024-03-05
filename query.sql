@@ -218,13 +218,11 @@ SELECT
 	`students`.`id`,
     `students`.`name` AS  `nome_studente`,
     `students`.`surname`,
-    COUNT(`exam_student`.`exam_id`) AS `tentativi_esame`,
+    COUNT(*) AS `tentativi_esame`,
     MAX(`exam_student`.`vote`) AS `voto_massimo`
 FROM `students`
 JOIN `exam_student` ON `students`.`id` = `exam_student`.`student_id`
 JOIN `exams` ON `exams`.`id` = `exam_student`.`exam_id`
+JOIN `courses` ON `exams`.`course_id` = `courses`.`id`
 WHERE `exam_student`.`vote` > 18
-GROUP BY `students`.`id`;
-
-
-
+GROUP BY `students`.`id`, `courses`.`id`;
